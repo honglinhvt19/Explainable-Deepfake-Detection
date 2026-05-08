@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+
+# Environment
+.env
+
+# Data & Models (Cực kỳ quan trọng)
+data/
+output_lora/
+detailed_evaluation.csv
+evaluation_report.md
+test_results.json
+*.jpg
+*.mp4
+*.avi
+
+# OS
+.DS_Store

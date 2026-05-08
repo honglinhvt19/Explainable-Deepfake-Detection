@@ -1,0 +1,23 @@
+torch>=2.4.0
+torchvision
+torchaudio
+transformers>=4.48.0
+accelerate>=0.30.0
+datasets
+peft>=0.11.0
+
+Pillow
+opencv-python-headless
+qwen-vl-utils
+mtcnn
+
+flash-attn>=2.5.0 --no-build-isolation
+
+scikit-learn
+pandas
+nltk
+rouge-score
+bert-score
+
+gradio>=4.31.0
+tqdm
