@@ -3,7 +3,7 @@ import torch
 from PIL import Image
 from torch.nn.utils.rnn import pad_sequence
 from datasets import load_dataset
-from transformers import Seq2SeqTrainingArguments, Seq2SeqTrainer, EarlyStoppingCallback
+from transformers import TrainingArguments, Trainer, EarlyStoppingCallback
 
 from core.config import TRAIN_JSONL, VAL_JSONL, TRAIN_OUTPUT_DIR, TRAIN_ARGS_DICT
 from core.model_loader import get_processor, load_model_for_training
@@ -64,7 +64,7 @@ if __name__ == "__main__":
     prepared_val = VAL_JSONL.replace(".jsonl", "_prepared.jsonl")
     dataset = load_dataset("json", data_files={"train": prepared_train, "val": prepared_val})
 
-    training_args = Seq2SeqTrainingArguments(
+    training_args = TrainingArguments(
         output_dir=TRAIN_OUTPUT_DIR,
         load_best_model_at_end=True, 
         metric_for_best_model="eval_loss", 
@@ -72,12 +72,12 @@ if __name__ == "__main__":
         logging_steps=10, eval_strategy="steps", eval_steps=200, 
         save_strategy="steps", save_steps=400, save_total_limit=3,
         gradient_checkpointing=True, report_to="none", 
-        predict_with_generate=True, generation_max_length=128, 
+        predict_with_generate=False, generation_max_length=128, 
         remove_unused_columns=False,
         **TRAIN_ARGS_DICT
     )
 
-    trainer = Seq2SeqTrainer(
+    trainer = Trainer(
         model=model, args=training_args, 
         train_dataset=dataset["train"], eval_dataset=dataset["val"],
         data_collator=multimodal_data_collator, 
